@@ -5,20 +5,7 @@ import multer from 'multer';
 import { v2 as cloudinary } from 'cloudinary';
 
 import configureDB from './config/db.js';
-app.post('/upload', upload.single('file'), async(req,res)=>{
-    try {
-          const file = req.file.path;
-      
-          const cloudinaryResponse = await cloudinary.uploader.upload(file, {
-            folder: 'classified_App_images',
-          });
-      
-          return  res.json(cloudinaryResponse);
-        } catch (err) {
-          console.error("Error uploading image to Cloudinary:", err);
-          return  res.status(500).json({ error: "Failed to upload image" });
-        }
-});
+
 //for accounts
 import userController from './app/controllers/user-controller.js';
 import { userRegisterValidationSchema,userLoginValidationSchema } from './app/validators/user-validation-schema.js';
@@ -74,6 +61,21 @@ const upload = multer({storage});
 // })
 
 // product image upload
+
+app.post('/upload', upload.single('file'), async(req,res)=>{
+    try {
+          const file = req.file.path;
+      
+          const cloudinaryResponse = await cloudinary.uploader.upload(file, {
+            folder: 'classified_App_images',
+          });
+      
+          return  res.json(cloudinaryResponse);
+        } catch (err) {
+          console.error("Error uploading image to Cloudinary:", err);
+          return  res.status(500).json({ error: "Failed to upload image" });
+        }
+});
 
 
 //for account
