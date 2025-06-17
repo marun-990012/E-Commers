@@ -1,12 +1,12 @@
 import { createSlice,createAsyncThunk } from "@reduxjs/toolkit";
-import axios from 'axios';
+import axiosInstance from "../utils/axiosInstance";
 import { act } from "react";
 
 
 export const createProduct=createAsyncThunk('products/createProduct',async(formData,{ rejectWithValue })=>{
     console.log(formData)
     try{
-        const response=await axios.post(`http://localhost:3039/product`,formData,{
+        const response=await axiosInstance.post(`/product`,formData,{
             headers: {
               Authorization: localStorage.getItem('token')      // 3rd argument: config with headers
             }
@@ -21,7 +21,7 @@ export const createProduct=createAsyncThunk('products/createProduct',async(formD
 export const uploadImage=createAsyncThunk('products/uploadImage',async(formData,{ rejectWithValue })=>{
     // console.log(formData)
     try{
-        const response=await axios.post('http://localhost:3039/upload',formData);
+        const response=await axiosInstance.post('/upload',formData);
           console.log(response.data)
         return response.data
     }catch(error){
@@ -34,7 +34,7 @@ export const updateProduct=createAsyncThunk('products/updateProduct',async({id,f
     // console.log(formData);
     // console.log(id);
     try{
-        const response=await axios.put(`http://localhost:3039/product/${id}`,formData,{
+        const response=await axiosInstance.put(`/product/${id}`,formData,{
             headers: {
               Authorization: localStorage.getItem('token')      // 3rd argument: config with headers
             }
@@ -48,7 +48,7 @@ export const updateProduct=createAsyncThunk('products/updateProduct',async({id,f
 
 export const listProducts=createAsyncThunk('products/listProducts',async()=>{
     try{
-        const response=await axios.get('http://localhost:3039/product');
+        const response=await axiosInstance.get('/product');
         // console.log(response.data);
         return response.data
     }catch(error){
@@ -59,7 +59,7 @@ export const listProducts=createAsyncThunk('products/listProducts',async()=>{
 
 export const approveProduct=createAsyncThunk('products/approveProduct',async(id)=>{
     try{
-        const response=await axios.put(`http://localhost:3039/productapprove/${id}`,{isApproved:true,rejected:false},{
+        const response=await axiosInstance.put(`/productapprove/${id}`,{isApproved:true,rejected:false},{
             headers: {
               Authorization: localStorage.getItem('token')      // 3rd argument: config with headers
             }
@@ -74,7 +74,7 @@ export const approveProduct=createAsyncThunk('products/approveProduct',async(id)
 export const rejectProduct=createAsyncThunk('products/rejectProduct',async(id)=>{
     console.log(id)
     try{
-        const response=await axios.put(`http://localhost:3039/productapprove/${id}`,{isApproved:false,rejected:true},{
+        const response=await axiosInstance.put(`/productapprove/${id}`,{isApproved:false,rejected:true},{
             headers: {
               Authorization: localStorage.getItem('token')      // 3rd argument: config with headers
             }
@@ -89,7 +89,7 @@ export const rejectProduct=createAsyncThunk('products/rejectProduct',async(id)=>
 export const fetchMyProducts=createAsyncThunk('products/fetchMyProducts',async(id)=>{
     console.log(id)
     try{
-        const response=await axios.get(`http://localhost:3039/productmy`,{
+        const response=await axiosInstance.get(`/productmy`,{
             headers: {
               Authorization: localStorage.getItem('token')      // 3rd argument: config with headers
             }
@@ -105,7 +105,7 @@ export const fetchMyProducts=createAsyncThunk('products/fetchMyProducts',async(i
 export const deleteProduct=createAsyncThunk('products/deleteProduct',async(id)=>{
     console.log(id)
     try{
-        const response=await axios.delete(`http://localhost:3039/product/${id}`,{
+        const response=await axiosInstance.delete(`/product/${id}`,{
             headers: {
               Authorization: localStorage.getItem('token')      // 3rd argument: config with headers
             }
@@ -121,7 +121,7 @@ export const deleteProduct=createAsyncThunk('products/deleteProduct',async(id)=>
 export const viewProduct=createAsyncThunk('products/viewProduct',async(id)=>{
     // console.log(id)
     try{
-        const response=await axios.get(`http://localhost:3039/product/${id}`);
+        const response=await axiosInstance.get(`/product/${id}`);
         //   console.log(response.data)
         return response.data ;
     }catch(error){
@@ -132,7 +132,7 @@ export const viewProduct=createAsyncThunk('products/viewProduct',async(id)=>{
 export const sendEnquiry=createAsyncThunk('products/sendEnquiry',async({id,formData},{})=>{
     // console.log(id)
     try{
-        const response=await axios.post(`http://localhost:3039/enquiry/${id}`,formData,{
+        const response=await axiosInstance.post(`/enquiry/${id}`,formData,{
             headers: {
               Authorization: localStorage.getItem('token')      // 3rd argument: config with headers
             }
@@ -148,7 +148,7 @@ export const sendEnquiry=createAsyncThunk('products/sendEnquiry',async({id,formD
 export const sendResponse=createAsyncThunk('products/sendResponse',async({id,formData},{})=>{
     // console.log(id)
     try{
-        const response=await axios.post(`http://localhost:3039/response/${id}`,formData,{
+        const response=await axiosInstance.post(`/response/${id}`,formData,{
             headers: {
               Authorization: localStorage.getItem('token')      // 3rd argument: config with headers
             }

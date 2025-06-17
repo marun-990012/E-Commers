@@ -1,11 +1,11 @@
 import {createSlice,createAsyncThunk} from '@reduxjs/toolkit';
-import axios from 'axios';
+import axiosInstance from '../utils/axiosInstance';
 
 
 
 export const listUsers=createAsyncThunk('users/listUsers',async()=>{
     try{
-        const response=await axios.get('http://localhost:3039/users',{
+        const response=await axiosInstance.get('/users',{
             headers: {
               Authorization: localStorage.getItem('token')      // 3rd argument: config with headers
             }
@@ -20,7 +20,7 @@ export const listUsers=createAsyncThunk('users/listUsers',async()=>{
 
 export const activeUser=createAsyncThunk('users/activeUser',async(id)=>{
     try{
-        const response=await axios.put(`http://localhost:3039/activation/${id}`,{isActive:true},{
+        const response=await axiosInstance.put(`/activation/${id}`,{isActive:true},{
             headers: {
               Authorization: localStorage.getItem('token')      // 3rd argument: config with headers
             }

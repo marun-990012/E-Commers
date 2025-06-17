@@ -1,12 +1,12 @@
 import {createSlice,createAsyncThunk} from '@reduxjs/toolkit';
-import axios from 'axios';
+import axiosInstance from '../utils/axiosInstance';
 import reducer from './accountSlice';
 
 
 
 export const listCategories=createAsyncThunk('categories/listCategories',async()=>{
     try{
-        const response=await axios.get('http://localhost:3039/category');
+        const response=await axiosInstance.get('/category');
         // console.log(response.data)
         return response.data
     }catch(error){
@@ -18,7 +18,7 @@ export const listCategories=createAsyncThunk('categories/listCategories',async()
 export const createCategory=createAsyncThunk('categories/createCategory',async(formData)=>{
     try{
         // console.log(formData)
-        const response=await axios.post('http://localhost:3039/category',formData,{
+        const response=await axiosInstance.post('/category',formData,{
             headers: {
               Authorization: localStorage.getItem('token')      // 3rd argument: config with headers
             }
@@ -33,11 +33,9 @@ export const createCategory=createAsyncThunk('categories/createCategory',async(f
 
 export const updateCategory=createAsyncThunk('categories/updateCategory',async({id,formData},{})=>{
 
-    // console.log(id)
-    // console.log(formData)
     try{
         // console.log(formData)
-        const response=await axios.put(`http://localhost:3039/category/${id}`,formData,{
+        const response=await axiosInstance.put(`/category/${id}`,formData,{
             headers: {
               Authorization: localStorage.getItem('token')      // 3rd argument: config with headers
             }
@@ -51,7 +49,7 @@ export const updateCategory=createAsyncThunk('categories/updateCategory',async({
 
 export const deleteCategory=createAsyncThunk('categories/deleteCategory',async(id)=>{
     try{
-        const response=await axios.delete(`http://localhost:3039/category/${id}`,{
+        const response=await axiosInstance.delete(`/category/${id}`,{
             headers:{
                 Authorization:localStorage.getItem('token')
             }

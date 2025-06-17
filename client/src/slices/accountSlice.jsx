@@ -1,10 +1,10 @@
 import {createSlice,createAsyncThunk} from '@reduxjs/toolkit';
-import axios from 'axios';
+import axiosInstance from '../utils/axiosInstance';
 
 
 export const login=createAsyncThunk('account/login',async(formData)=>{
     try{
-        const response=await axios.post('http://localhost:3039/login',formData);
+        const response=await axiosInstance.post('/login',formData);
         // console.log(response.data)
         localStorage.setItem('token',response.data.token);
 
@@ -16,7 +16,7 @@ export const login=createAsyncThunk('account/login',async(formData)=>{
 
 export const fetchAccount=createAsyncThunk('account/listUsers',async()=>{
     try{
-        const response=await axios.get('http://localhost:3039/account',{
+        const response=await axiosInstance.get('/account',{
             headers: {
               Authorization: localStorage.getItem('token')     // 3rd argument: config with headers
             }
@@ -33,7 +33,7 @@ export const updatAccount=createAsyncThunk('users/updatAccount',async({id,formDa
     console.log(id,formData)
     try{
         // console.log(formData)
-        const response=await axios.put(`http://localhost:3039/upload-image/${id}`,formData,{
+        const response=await axiosInstance.put(`/upload-image/${id}`,formData,{
             headers: {
               Authorization: localStorage.getItem('token')      // 3rd argument: config with headers
             }
@@ -48,7 +48,7 @@ export const updatAccount=createAsyncThunk('users/updatAccount',async({id,formDa
 
 export const deleteAccount=createAsyncThunk('users/deleteAccount',async(id)=>{
     try{
-        const response=await axios.delete(`http://localhost:3039/remove/${id}`,{
+        const response=await axiosInstance.delete(`/remove/${id}`,{
             headers:{
                 Authorization:localStorage.getItem('token')
             }
@@ -63,7 +63,7 @@ export const deleteAccount=createAsyncThunk('users/deleteAccount',async(id)=>{
 export const addToCart=createAsyncThunk('products/addToCart',async(id,{})=>{
     // console.log(id)
     try{
-        const response=await axios.post(`http://localhost:3039/cart/${id}`,{},{
+        const response=await axiosInstance.post(`/cart/${id}`,{},{
             headers: {
               Authorization: localStorage.getItem('token')     // 3rd argument: config with headers
             }
@@ -79,7 +79,7 @@ export const addToCart=createAsyncThunk('products/addToCart',async(id,{})=>{
 export const removeCart=createAsyncThunk('products/removeCart',async(id,{})=>{
     // console.log(id)
     try{
-        const response=await axios.post(`http://localhost:3039/remove-cart/${id}`,{},{
+        const response=await axiosInstance.post(`/remove-cart/${id}`,{},{
             headers: {
               Authorization: localStorage.getItem('token')     // 3rd argument: config with headers
             }
