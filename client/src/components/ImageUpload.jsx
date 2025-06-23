@@ -9,7 +9,7 @@ function ImageUpload(){
         formData.append('file',file);
         console.log(formData)
         try{
-          axios.post('http://localhost:3039/upload',formData).then((res)=>{
+          axios.post('https://e-commers-47u8.onrender.com',formData).then((res)=>{
             console.log(res.data.secure_url)
           }).catch((err)=>{console.log(err)})
             // console.log(response.data);
