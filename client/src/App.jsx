@@ -25,7 +25,7 @@ import PrivateRoute from "./components/PrivateRoute";
 import ProtectedRoute from "./components/ProtectedRoute";
 import UnAuthorized from "./components/UnAuthorization";
 import { fetchAccount } from "./slices/accountSlice";
-
+import { listProducts } from "./slices/productSlice";
 function App() {
   const dispatch=useDispatch();
   const navigate=useNavigate();
@@ -39,7 +39,9 @@ function App() {
     }
   }, [isLoggedIn]);
 
-  
+  useEffect(()=>{
+    dispatch(listProducts())
+  })
 
   console.log(isLoggedIn);
   return (
